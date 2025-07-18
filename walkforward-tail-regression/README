@@ -1,6 +1,6 @@
 Walk‑Forward Tail Regression (wft) is a modular Python toolkit for evaluating statistical trading models in a walk‑forward back‑test. The codebase inludes:
 • classes for data cleaning, quick exploratory analysis with plotting utilities, model fitting, and walk‑forward validation;
-• cross validation whithin a step‑wise feature selection algorithim:
+• cross validation whithin a step‑wise feature selection algorithim;
 • hyper‑parameter cross‑validation;
-• reference models (OLS, feed‑forward neural net); and
+• reference models (OLS, feed‑forward neural net);
 • performance/robustness metrics to validate out‑of‑sample results.
