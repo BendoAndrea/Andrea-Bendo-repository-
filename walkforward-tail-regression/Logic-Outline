@@ -1,0 +1,43 @@
+Main logic
+
+User inputs
+1. User inputs: log(OHLC) data, predictor variable, n bars lookahead return (target)
+2. User select: model specification, (e.g., OLS with or without interaction terms).
+3. Walk‑forward configuration: training‑window length, step size, and look‑ahead horizon.
+
+User options (flags)
+--------------------
+- Add interaction / square terms?  
+- Cap outliers at 1.5*IQR?
+- Standardise or normalise predictors?  
+- Run step‑wise feature selection with k‑fold CV (no CV)?  
+- Tune model hyper‑parameters via CV grid?  
+
+Model logic:
+1. Data cleaning => drop Nans, 0 volume days
+3. Instantiate  the model specified by the user
+4. Walk‑forward loop over index i:
+4.1 If **i** is a training index:
+    - Define train slice: past *N* bars excluding look‑ahead buffer.  
+    - Apply optional scaling
+    - Optional: step‑wise feature selection  
+    - Optional: adjust model hyperparameters with k-fold cross validation
+    - Fit model to the training slice
+    - Optimise long or short or both, prediction percentiles that maximise training‑sample Sharpe ratio subject to a minimum‑trade constraint.
+    - is the model satisfactory? if yes put it to test
+    - adjust next train index
+
+5. if the model is ready do the following:
+  - Use the trained model to predict return between index [i] and [i+1]
+  - Is the prediction below/above the computed threshold?
+    if yes:
+      - a short/long position is opened for time = lookahead horizon
+  - Charge commission per side (bps) on any position chang
+  - is the testing window over ? 
+  if yes collect in sample out of sample P&L and return to point 4.1.
+
+Outputs
+-------
+• Series of net out‑of‑sample log returns.  
+• Fold‑by‑fold metrics (Sharpe, drawdown, trade count).  
+• Stored model coefficients and threshold levels for each retrain.
