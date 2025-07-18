@@ -1,0 +1,19 @@
+[project]
+name = "wftr"
+version = "0.1.0"
+description = "Volatility-scaled walk-forward tail-threshold backtesting framework"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name="Andrea Bendo"}]
+
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.0",
+  "matplotlib>=3.8",
+  "yfinance>=0.2",
+  "scikit-learn>=1.4",  # for BaseEstimator, etc.
+]
+
+[project.urls]
+Homepage = "https://github.com/USERNAME/walkforward-tail-regression"
